@@ -9,6 +9,7 @@ import "./globals.css";
 import React from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
+import { ptBR } from "@clerk/localizations";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({
           footerActionLink: "primary-text-gradient hover:text-primary-500",
         },
       }}
+      localization={ptBR}
     >
       <html lang="pt">
         <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
