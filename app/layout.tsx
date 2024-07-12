@@ -1,10 +1,4 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import React from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
@@ -49,16 +43,7 @@ export default function RootLayout({
           }}
           localization={ptBR}
         >
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <ThemeProvider>
-            <h1 className="h1-bold">This is a piece of text</h1>
-            {children}
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
