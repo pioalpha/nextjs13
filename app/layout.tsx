@@ -10,6 +10,7 @@ import React from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
 import { ptBR } from "@clerk/localizations";
+import { ThemeProvider } from "@/context/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,27 +38,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        elements: {
-          formButtonPrimary: "primary-gradient",
-          footerActionLink: "primary-text-gradient hover:text-primary-500",
-        },
-      }}
-      localization={ptBR}
-    >
-      <html lang="pt">
-        <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="pt">
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+        <ClerkProvider
+          appearance={{
+            elements: {
+              formButtonPrimary: "primary-gradient",
+              footerActionLink: "primary-text-gradient hover:text-primary-500",
+            },
+          }}
+          localization={ptBR}
+        >
           <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn>
-          <h1 className="h1-bold">This is a piece of text</h1>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+          <ThemeProvider>
+            <h1 className="h1-bold">This is a piece of text</h1>
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
