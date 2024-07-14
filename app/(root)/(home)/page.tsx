@@ -18,7 +18,7 @@ const questions = [
     ],
     author: { _id: 1, name: "Jhon Doe", picture: "/assets/icons/avatar.svg" },
     upvotes: 10,
-    views: 100,
+    views: 1000,
     answers: [],
     createdAt: new Date("2021-09-01T12:00:00.000Z"),
   },

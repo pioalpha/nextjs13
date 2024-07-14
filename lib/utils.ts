@@ -47,8 +47,8 @@ export const humanReadableNumber = (num: number): string => {
     order++;
   }
 
-  // Format the number to 2 decimal places
-  const formattedNumber = number.toFixed(2);
+  // Format the number to 2 decimal places if order
+  const formattedNumber = order > 0 ? number.toFixed(2) : number;
 
   return `${formattedNumber}${units[order]}`;
 };
