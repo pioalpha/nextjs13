@@ -5,10 +5,11 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearch from "@/components/shared/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 import React from "react";
 
-const questions = [
+/* const questions = [
   {
     _id: 1,
     title: "Cascading Deletes in SQLAlchemy?",
@@ -35,9 +36,13 @@ const questions = [
     answers: [],
     createdAt: new Date("2023-09-01T13:00:00.000Z"),
   },
-];
+]; */
 
-const Home = () => {
+export default async function Home() {
+  const result = await getQuestions({});
+
+  console.log(result.questions);
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -65,8 +70,8 @@ const Home = () => {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -90,6 +95,4 @@ const Home = () => {
       </div>
     </>
   );
-};
-
-export default Home;
+}
