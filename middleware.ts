@@ -5,8 +5,8 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
-  "/api/webhook(.*)",
-  "/api/chatgpt(.*)",
+  "/api/webhook/(.*)",
+  "/api/chatgpt/(.*)",
 ]);
 
 export default clerkMiddleware(
@@ -22,8 +22,8 @@ export default clerkMiddleware(
 import { authMiddleware } from "@clerk/nextjs/server";
 
 export default authMiddleware({
-  publicRoutes: ["/", "/api/webhook"],
-  ignoredRoutes: ["/api/webhook", "/api/chatgpt"],
+  publicRoutes: ["/"],
+  ignoredRoutes: ["/api/webhook(.*)", "/api/chatgpt(.*)"],
 });
 
 export const config = {
