@@ -8,11 +8,14 @@ const isPublicRoute = createRouteMatcher([
   "/api/chatgpt(.*)",
 ]);
 
-export default clerkMiddleware((auth, request) => {
-  if (!isPublicRoute(request)) {
-    auth().protect();
-  }
-});
+export default clerkMiddleware(
+  (auth, request) => {
+    if (!isPublicRoute(request)) {
+      auth().protect();
+    }
+  },
+  { debug: process.env.CLERK_DEBUG === "true" }
+);
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
