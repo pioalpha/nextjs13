@@ -1,3 +1,4 @@
+/*
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
@@ -16,6 +17,14 @@ export default clerkMiddleware(
   },
   { debug: process.env.CLERK_DEBUG === "true" }
 );
+*/
+
+import { authMiddleware } from "@clerk/nextjs/server";
+
+export default authMiddleware({
+  publicRoutes: ["/", "/api/webhook"],
+  ignoredRoutes: ["/api/webhook", "/api/chatgpt"],
+});
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
