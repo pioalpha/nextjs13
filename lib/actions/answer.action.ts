@@ -38,6 +38,8 @@ export async function getAnswers(params: GetAnswersParams) {
     const { questionId } = params;
     const answers = await Answer.find({ question: questionId })
       .populate("author", "_id clerkId name picture")
+      .populate("downvotes", "_id clerkId")
+      .populate("upvotes", "_id clerkId")
       .sort({ createAt: -1 });
     return { answers };
   } catch (error) {
