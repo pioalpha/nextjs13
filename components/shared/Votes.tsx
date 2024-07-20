@@ -1,7 +1,12 @@
-"use client"
-import { humanReadableNumber } from '@/lib/utils';
-import Image from 'next/image'
-import React from 'react'
+"use client";
+import {
+  downvoteQuestion,
+  upvoteQuestion,
+} from "@/lib/actions/question.action";
+import { humanReadableNumber } from "@/lib/utils";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import React from "react";
 
 interface Props {
   type: string;
@@ -14,46 +19,125 @@ interface Props {
   hasSaved?: boolean;
 }
 
-const Votes = ( { type, itemId, userId, downvotes =0, hasDownVoted, upvotes=0, hasUpVoted, hasSaved }:Props ) => {
-// preciso listar quantos votos de cada recebeu,
-// se o usuário corrente votou e em qual opção 
-  console.log({downvotes, upvotes})
+const Votes = ({
+  type,
+  itemId,
+  userId,
+  downvotes,
+  hasDownVoted,
+  upvotes,
+  hasUpVoted,
+  hasSaved,
+}: Props) => {
+  const pathname = usePathname();
+  // const router = useRouter();
+  // preciso listar quantos votos de cada recebeu,
+  // se o usuário corrente votou e em qual opção
+  // console.log({ downvotes, upvotes });
 
-  const handleSave = () => {
+  const handleSave = () => {};
 
-  }
+  const handleVote = async (action: string) => {
+    if (!userId) {
+      return;
+    }
 
-  const handleVote = (action: string) => {
+    if (action === "upvote") {
+      if (type === "Question") {
+        await upvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted: hasUpVoted,
+          hasdownVoted: hasDownVoted,
+          path: pathname,
+        });
+      } else if (type === "Answer") {
+        // await upvoteAnwser({
+        //   answerId: JSON.parse(itemId),
+        //   userId: JSON.parse(userId),
+        //   hasupVoted: hasUpVoted,
+        //   hasdownVoted: hasDownVoted,
+        //   path: pathname,
+        // });
+      } else {
+        throw new Error("invalid type in upVotes");
+      }
+    } else if (action === "downvote") {
+      if (type === "Question") {
+        await downvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted: hasUpVoted,
+          hasdownVoted: hasDownVoted,
+          path: pathname,
+        });
+      } else if (type === "Answer") {
+        // await downvoteAnwser({
+        //   answerId: JSON.parse(itemId),
+        //   userId: JSON.parse(userId),
+        //   hasupVoted: hasUpVoted,
+        //   hasdownVoted: hasDownVoted,
+        //   path: pathname,
+        // });
+      } else {
+        throw new Error("invalid type in downVotes");
+      }
+      // TODO: show a toast
+    } else {
+      throw new Error("invalid action in Votes");
+    }
+  };
 
-  }
-  
   return (
-    <div className='flex gap-5'>
-      <div className='flex-center gap-2.5'>
-      <p>{type}{itemId}{userId}{hasSaved}</p>
-      <div className='flex-center gap-1.5'>
-          <Image src={`/assets/icons/upvote${hasUpVoted ? "d" : ""}.svg`} alt="upvote" width={18} height={18} className='cursor-pointer'
-          onClick={() => handleVote('upvote')}
+    <div className="flex gap-5">
+      <div className="flex-center gap-2.5">
+        <p>
+          {type}
+          {itemId}
+          {userId}
+          {hasSaved}
+        </p>
+        <div className="flex-center gap-1.5">
+          <Image
+            src={`/assets/icons/upvote${hasUpVoted ? "d" : ""}.svg`}
+            alt="upvote"
+            width={18}
+            height={18}
+            className="cursor-pointer"
+            onClick={() => handleVote("upvote")}
           />
-          <div className='flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1'>
-            <p className='subtle-medium text-dark400_light900'>{humanReadableNumber(downvotes)}</p>
+          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
+            <p className="subtle-medium text-dark400_light900">
+              {humanReadableNumber(upvotes)}
+            </p>
           </div>
         </div>
-        <div className='flex-center gap-1.5'>
-          <Image src={`/assets/icons/downvote${hasDownVoted ? "d" : ""}.svg`} alt="downvote" width={18} height={18}
-          className='cursor-pointer'
-          onClick={() => handleVote('downvote')}
+        <div className="flex-center gap-1.5">
+          <Image
+            src={`/assets/icons/downvote${hasDownVoted ? "d" : ""}.svg`}
+            alt="downvote"
+            width={18}
+            height={18}
+            className="cursor-pointer"
+            onClick={() => handleVote("downvote")}
           />
-          <div className='flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1'>
-            <p className='subtle-medium text-dark400_light900'>{humanReadableNumber(upvotes)}</p>
+          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
+            <p className="subtle-medium text-dark400_light900">
+              {humanReadableNumber(downvotes)}
+            </p>
           </div>
         </div>
       </div>
-      <Image src={`/assets/icons/star-${hasSaved ? "filled" : "red"}.svg`} alt="star" width={18} height={18} className='cursor-pointer'
-          onClick={() => handleSave()}
-          />
+      <Image
+        src={`/assets/icons/star-${hasSaved ? "filled" : "red"}.svg`}
+        alt="star"
+        width={18}
+        height={18}
+        className="cursor-pointer"
+        onClick={() => handleSave()}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Votes
+export default Votes;

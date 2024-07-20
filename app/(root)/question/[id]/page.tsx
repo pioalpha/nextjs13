@@ -13,14 +13,14 @@ import Link from "next/link";
 import React from "react";
 
 const page = async ({ params, searchParams }) => {
-//  console.log(params, searchParams);
+  //  console.log(params, searchParams);
   const result = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
-//  console.log({ mongoUser, result });
+  // console.log({ mongoUser, result });
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -42,13 +42,14 @@ const page = async ({ params, searchParams }) => {
           </Link>
           <div className="flex justify-end">
             <Votes
-            type="question" itemId={JSON.stringify(result._id)}
-            userId={JSON.stringify(mongoUser._id)}
-            upvotes={result.upvotes.lenght}
-            hasUpVoted={result.upvotes.includes(mongoUser._id)}
-            downvotes={result.downvotes.lenght}
-            hasDownVoted={result.downvotes.includes(mongoUser._id)}
-            hasSaved={mongoUser?.saved.includes(result._id)}
+              type="Question"
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser._id)}
+              upvotes={result.upvotes.length}
+              hasUpVoted={result.upvotes.includes(mongoUser._id)}
+              downvotes={result.downvotes.length}
+              hasDownVoted={result.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
             />
           </div>
         </div>
