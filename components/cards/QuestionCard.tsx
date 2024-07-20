@@ -9,8 +9,8 @@ interface QuestionProps {
   title: string;
   tags: { _id: number; name: string }[];
   author: { _id: number; name: string; picture: string };
-  upvotes: number;
-  views: number;
+  upvotes: string[];
+  views: string[];
   answers: Array<object>;
   createdAt: Date;
 }
@@ -59,7 +59,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
-          value={humanReadableNumber(upvotes)}
+          value={humanReadableNumber(upvotes.length)}
           title=" Votes "
           textStyles="small-medium text-dark400_light800"
         />
@@ -73,7 +73,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="eye"
-          value={humanReadableNumber(views)}
+          value={humanReadableNumber(views.length)}
           title=" Views "
           textStyles="small-medium text-dark400_light800"
         />
