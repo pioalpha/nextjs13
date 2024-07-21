@@ -7,7 +7,6 @@ import {
 } from "@/lib/actions/question.action";
 import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { humanReadableNumber } from "@/lib/utils";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
