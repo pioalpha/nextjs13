@@ -98,7 +98,7 @@ const Votes = ({
   };
 
   // Implementado o isDevelopment e window.executed para garantir apenas uma execução do viewQuestion pois o useEffect é executado 2 vezes em desenvolvimento devido ao strictmode estar ativado
-  // O chato desta implementação é que demora para o número de views ser exibida no sistema pois não há revalidação imediata da página
+  // O chato desta implementação é que demora para o número de views ser exibida no sistema pois não há revalidação imediata da página e o window.executed não é reinicializado até que a página seja totalmente recarregada
   const isDevelopment = process.env.NODE_ENV === "development";
   useEffect(() => {
     const executeViewQuestion = async () => {
