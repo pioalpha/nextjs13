@@ -75,7 +75,7 @@ const page = async ({ params, searchParams }) => {
         <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="eye"
-          value={humanReadableNumber(result.views.length)}
+          value={humanReadableNumber(result.views)}
           title=" Views "
           textStyles="small-medium text-dark400_light800"
         />

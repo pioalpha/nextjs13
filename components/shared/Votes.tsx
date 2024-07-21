@@ -1,14 +1,16 @@
 "use client";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
+import { viewQuestion } from "@/lib/actions/interaction.action";
 import {
   downvoteQuestion,
   upvoteQuestion,
 } from "@/lib/actions/question.action";
 import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { humanReadableNumber } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Props {
   type: string;
@@ -32,7 +34,7 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
-  // const router = useRouter();
+  const router = useRouter();
   // preciso listar quantos votos de cada recebeu,
   // se o usuário corrente votou e em qual opção
   // console.log({ downvotes, upvotes });
@@ -95,6 +97,25 @@ const Votes = ({
       throw new Error("invalid action in Votes");
     }
   };
+
+  // Implementado o isDevelopment e window.executed para garantir apenas uma execução do viewQuestion pois o useEffect é executado 2 vezes em desenvolvimento devido ao strictmode estar ativado
+  // O chato desta implementação é que demora para o número de views ser exibida no sistema pois não há revalidação imediata da página
+  const isDevelopment = process.env.NODE_ENV === "development";
+  useEffect(() => {
+    const executeViewQuestion = async () => {
+      if (type === "Question" && (!isDevelopment || !window.executed)) {
+        viewQuestion({
+          questionId: JSON.parse(itemId),
+          userId: userId ? JSON.parse(userId) : undefined,
+        });
+        // alert("Question viewed: " + pathname);
+        if (isDevelopment) {
+          window.executed = true;
+        }
+      }
+    };
+    executeViewQuestion();
+  }, [isDevelopment, type, itemId, userId, pathname, router]);
 
   return (
     <div className="flex gap-5">
