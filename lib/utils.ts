@@ -52,3 +52,13 @@ export const humanReadableNumber = (num: number): string => {
 
   return `${formattedNumber}${units[order]}`;
 };
+
+export const getMonthYear = (date: Date): string => {
+  const month = date.toLocaleString("default", { month: "long" }); // Get full month name
+  const year = date.getFullYear(); // Get full year
+  return capitalizeFirstLetter(`${month} ${year}`);
+};
+
+export const capitalizeFirstLetter = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
