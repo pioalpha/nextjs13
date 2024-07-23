@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "../ui/button";
-import { SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const LeftSidebar = () => {
   const pathname = usePathname();
@@ -48,6 +48,20 @@ const LeftSidebar = () => {
           );
         })}
       </div>
+      <SignedIn>
+        <UserButton
+          afterSwitchSessionUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: "h-10 w-10",
+            },
+            variables: {
+              colorPrimary: "#ff7000",
+            },
+          }}
+        />
+      </SignedIn>
+
       <SignedOut>
         <div className="flex flex-col gap-3">
           <Link href="/sign-in">

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
-import { SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { sidebarLinks } from "@/constants";
 import { usePathname } from "next/navigation";
@@ -81,6 +81,20 @@ const MobileNav = () => {
           <SheetClose asChild>
             <NavContent />
           </SheetClose>
+          <SignedIn>
+            <UserButton
+              afterSwitchSessionUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "h-10 w-10",
+                },
+                variables: {
+                  colorPrimary: "#ff7000",
+                },
+              }}
+            />
+          </SignedIn>
+
           <SignedOut>
             <div className="flex flex-col gap-3">
               <SheetClose asChild>

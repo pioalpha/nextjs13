@@ -1,4 +1,3 @@
-import { SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -25,19 +24,6 @@ const Navbar = () => {
 
       <div className="flex-between gap-5">
         <Theme />
-        <SignedIn>
-          <UserButton
-            afterSwitchSessionUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: "h-10 w-10",
-              },
-              variables: {
-                colorPrimary: "#ff7000",
-              },
-            }}
-          />
-        </SignedIn>
         <MobileNav />
       </div>
     </nav>
