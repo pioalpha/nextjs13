@@ -1,7 +1,7 @@
 import { getUserAnswers } from '@/lib/actions/user.action';
 import { SearchParamsProps } from '@/types';
 import React from 'react'
-import QuestionCard from '../cards/QuestionCard';
+import AnswerCard from '../cards/AnswerCard';
 
 interface Props extends SearchParamsProps{
     userId: string;
@@ -9,23 +9,20 @@ interface Props extends SearchParamsProps{
 }
 
 const AnswersTab = async ({searchParams, userId, clerkId}: Props) => {
-    const result = await getUserAnswers({userId});
+    const result = await getUserAnswers({userId, page: 1});
   return (
     <>
-        {/* result.questions.map((question) => (
-            <QuestionCard
-            key={question._id}
-            _id={question._id}
+        { result.answers.map((answer) => (
+            <AnswerCard
+            key={answer._id}
+            _id={answer._id}
             clerkId={clerkId}
-            title={question.title}
-            tags={question.tags}
-            author={question.author}
-            upvotes={question.upvotes}
-            views={question.views}
-            answers={question.answers}
-            createdAt={question.createdAt}
+            question={answer.question}
+            author={answer.author}
+            upvotes={answer.upvotes.length}
+            createdAt={answer.createdAt}
             />
-        )) */}
+        )) }
     </>
   )
 }
