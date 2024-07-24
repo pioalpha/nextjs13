@@ -119,12 +119,6 @@ const Votes = ({
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
-        <p>
-          {type}
-          {itemId}
-          {userId}
-          {hasSaved}
-        </p>
         <div className="flex-center gap-1.5">
           <Image
             src={`/assets/icons/upvote${hasUpVoted ? "d" : ""}.svg`}
