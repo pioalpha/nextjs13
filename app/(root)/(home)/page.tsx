@@ -6,42 +6,16 @@ import LocalSearch from "@/components/shared/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
+import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import React from "react";
 
-/* const questions = [
-  {
-    _id: 1,
-    title: "Cascading Deletes in SQLAlchemy?",
-    tags: [
-      { _id: 1, name: "python" },
-      { _id: 2, name: "sql" },
-    ],
-    author: { _id: 1, name: "Jhon Doe", picture: "/assets/icons/avatar.svg" },
-    upvotes: 10,
-    views: 1000,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"),
-  },
-  {
-    _id: 2,
-    title: "How to center a div?",
-    tags: [
-      { _id: 3, name: "css" },
-      { _id: 4, name: "html" },
-    ],
-    author: { _id: 2, name: "Jane Smith", picture: "/assets/icons/avatar.svg" },
-    upvotes: 10,
-    views: 100,
-    answers: [],
-    createdAt: new Date("2023-09-01T13:00:00.000Z"),
-  },
-]; */
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+  });
 
-export default async function Home() {
-  const result = await getQuestions({});
-
-//  console.log(result.questions);
+  //  console.log(result.questions);
 
   return (
     <>
