@@ -37,8 +37,18 @@ export async function getAllUsers(params: GetAllUsersParams) {
     connectToDatabase();
 
     //    const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    const { searchQuery } = params;
 
-    const users = await User.find({}).sort({ created: -1 });
+    const query: FilterQuery<typeof User> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+        { username: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const users = await User.find(query).sort({ created: -1 });
 
     return { users };
   } catch (error) {
