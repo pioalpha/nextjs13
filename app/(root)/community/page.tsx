@@ -6,10 +6,12 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
-const page = async ({ searchParams }: SearchParamsProps) => {
+const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
+
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Users</h1>
@@ -43,4 +45,4 @@ const page = async ({ searchParams }: SearchParamsProps) => {
   );
 };
 
-export default page;
+export default Page;
