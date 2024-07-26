@@ -13,9 +13,11 @@ import React from "react";
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
   //  console.log(result.questions);
+  // TODO: Fetch Recommended Questions
 
   return (
     <>
